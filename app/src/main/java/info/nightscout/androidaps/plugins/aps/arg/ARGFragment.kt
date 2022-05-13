@@ -34,7 +34,7 @@ class ARGFragment : DaggerFragment() {
     @Inject lateinit var rxBus: RxBus
     @Inject lateinit var rh: ResourceHelper
     @Inject lateinit var fabricPrivacy: FabricPrivacy
-    @Inject lateinit var openAPSSMBPlugin: OpenAPSSMBPlugin
+    @Inject lateinit var openAPSSMBPlugin: ARGPlugin
     @Inject lateinit var dateUtil: DateUtil
     @Inject lateinit var jsonFormatter: JSONFormatter
 
@@ -92,10 +92,11 @@ class ARGFragment : DaggerFragment() {
     @Synchronized
     fun updateGUI() {
         if (_binding == null) return
-        openAPSSMBPlugin.lastAPSResult?.let { lastAPSResult ->
+        ARGPlugin.lastAPSResult?.let { lastAPSResult ->
             binding.result.text = jsonFormatter.format(lastAPSResult.json)
             binding.request.text = lastAPSResult.toSpanned()
         }
+        /*
         openAPSSMBPlugin.lastDetermineBasalAdapterSMBJS?.let { determineBasalAdapterSMBJS ->
             binding.glucosestatus.text = jsonFormatter.format(determineBasalAdapterSMBJS.glucoseStatusParam)
             binding.currenttemp.text = jsonFormatter.format(determineBasalAdapterSMBJS.currentTempParam)
@@ -115,8 +116,10 @@ class ARGFragment : DaggerFragment() {
                 binding.constraints.text = it.getReasons(aapsLogger)
             }
         }
-        if (openAPSSMBPlugin.lastAPSRun != 0L) {
-            binding.lastrun.text = dateUtil.dateAndTimeString(openAPSSMBPlugin.lastAPSRun)
+
+         */
+        if (ARGPlugin.lastAPSRun != 0L) {
+            binding.lastrun.text = dateUtil.dateAndTimeString(ARGPlugin.lastAPSRun)
         }
         openAPSSMBPlugin.lastAutosensResult.let {
             binding.autosensdata.text = jsonFormatter.format(it.json())
