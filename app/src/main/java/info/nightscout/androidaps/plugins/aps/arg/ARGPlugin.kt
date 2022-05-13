@@ -60,8 +60,9 @@ class ARGPlugin @Inject constructor(
 
     // last values
     override var lastAPSRun: Long = 0
-    override var lastAPSResult: DetermineBasalResultSMB? = null
-    var lastDetermineBasalAdapterSMBJS: DetermineBasalAdapterSMBJS? = null
+    override var lastAPSResult: DetermineResultARG? = null
+    //Comento porque nosotrxs no tendríamos adaptador, por el momento.
+    //var lastDetermineBasalAdapterSMBJS: DetermineBasalAdapterSMBJS? = null
     var lastAutosensResult = AutosensResult()
 
     override fun specialEnableCondition(): Boolean {
@@ -146,7 +147,7 @@ class ARGPlugin @Inject constructor(
         } else {
             lastAutosensResult.sensResult = "autosens disabled"
         }
-        val iobArray = iobCobCalculator.calculateIobArrayForSMB(lastAutosensResult, SMBDefaults.exercise_mode, SMBDefaults.half_basal_exercise_target, isTempTarget)
+        val iobArray = iobCobCalculator.calculateIobArrayForSMB(lastAutosensResult, ARGDefaults.exercise_mode, ARGDefaults.half_basal_exercise_target, isTempTarget)
         profiler.log(LTag.APS, "calculateIobArrayInDia()", startPart)
         startPart = System.currentTimeMillis()
         val smbAllowed = Constraint(!tempBasalFallback).also {
@@ -165,6 +166,8 @@ class ARGPlugin @Inject constructor(
         profiler.log(LTag.APS, "SMB data gathering", start)
         start = System.currentTimeMillis()
 
+        //Comento porque nosotrxs no tendríamos adaptador, por el momento.
+        /*
         DetermineBasalAdapterSMBJS(ScriptReader(context), injector).also { determineBasalAdapterSMBJS ->
             determineBasalAdapterSMBJS.setData(profile, maxIob, maxBasal, minBg, maxBg, targetBg,
                 activePlugin.activePump.baseBasalRate,
@@ -197,6 +200,8 @@ class ARGPlugin @Inject constructor(
                 lastAPSRun = now
             }
         }
+        */
+
         rxBus.send(EventOpenAPSUpdateGui())
     }
 
