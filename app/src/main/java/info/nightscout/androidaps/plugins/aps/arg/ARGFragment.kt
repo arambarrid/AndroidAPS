@@ -34,7 +34,7 @@ class ARGFragment : DaggerFragment() {
     @Inject lateinit var rxBus: RxBus
     @Inject lateinit var rh: ResourceHelper
     @Inject lateinit var fabricPrivacy: FabricPrivacy
-    @Inject lateinit var openAPSSMBPlugin: ARGPlugin
+    @Inject lateinit var ARGPlugin: ARGPlugin
     @Inject lateinit var dateUtil: DateUtil
     @Inject lateinit var jsonFormatter: JSONFormatter
 
@@ -54,7 +54,7 @@ class ARGFragment : DaggerFragment() {
         super.onViewCreated(view, savedInstanceState)
 
         binding.run.setOnClickListener {
-            openAPSSMBPlugin.invoke("OpenAPSSMB button", false)
+            ARGPlugin.invoke("OpenAPSSMB button", false)
         }
     }
 
@@ -121,7 +121,7 @@ class ARGFragment : DaggerFragment() {
         if (ARGPlugin.lastAPSRun != 0L) {
             binding.lastrun.text = dateUtil.dateAndTimeString(ARGPlugin.lastAPSRun)
         }
-        openAPSSMBPlugin.lastAutosensResult.let {
+        ARGPlugin.lastAutosensResult.let {
             binding.autosensdata.text = jsonFormatter.format(it.json())
         }
     }
