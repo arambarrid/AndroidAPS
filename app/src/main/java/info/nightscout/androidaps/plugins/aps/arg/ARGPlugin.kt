@@ -48,7 +48,7 @@ class ARGPlugin @Inject constructor(
     private val glucoseStatusProvider: GlucoseStatusProvider
 ) : PluginBase(PluginDescription()
     .mainType(PluginType.APS)
-    .fragmentClass(OpenAPSSMBFragment::class.java.name)
+    .fragmentClass(ARGFragment::class.java.name)
     .pluginIcon(R.drawable.ic_generic_icon)
     .pluginName(R.string.openapssmb)
     .shortName(R.string.smb_shortname)
